@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping
+@CrossOrigin(exposedHeaders="Access-Control-Allow-Origin")
 public class GameController {
 
     @Autowired
