@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/gameCollection")
+@RequestMapping
 public class GameController {
 
     @Autowired
