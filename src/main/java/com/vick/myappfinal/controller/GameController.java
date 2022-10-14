@@ -26,7 +26,7 @@ public class GameController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @GetMapping(value = "/gameList")
+    @GetMapping(value = "/game")
     public ResponseEntity<List<GameDTO>> findAll(){
         List<Game> list = gameServiceImpl.findAll();
         List<GameDTO> listDTO = list.stream().map(obj -> new GameDTO(obj)).collect(Collectors.toList());
