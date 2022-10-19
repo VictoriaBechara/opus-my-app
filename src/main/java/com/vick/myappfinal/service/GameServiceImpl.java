@@ -11,22 +11,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
 
     @Autowired
     private GameRepository gameRepository;
 
-    public Game findById(Integer id){
+    public Game findById(Integer id) {
         Optional<Game> obj = gameRepository.findById(id);
         return obj.orElse(null);
-                //orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + Game.class.getName()));
+        //orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + Game.class.getName()));
     }
 
-    public List<Game> findAll(){
+    public List<Game> findAll() {
         return gameRepository.findAll();
     }
 
-    public Game create (Game obj){
+    public Game create(Game obj) {
         obj.setGameId(null);
         return gameRepository.save(obj);
     }
@@ -44,7 +44,7 @@ public class GameServiceImpl implements GameService{
         findById(id);
         try {
             gameRepository.deleteById(id);
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("\n" +
                     "This game cannot be deleted! It has associated platforms.");
         }

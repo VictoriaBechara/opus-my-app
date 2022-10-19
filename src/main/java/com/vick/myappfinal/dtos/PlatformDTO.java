@@ -1,6 +1,7 @@
 package com.vick.myappfinal.dtos;
 
 import com.vick.myappfinal.domain.Platform;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -9,7 +10,12 @@ public class PlatformDTO {
     private Integer platformId;
     private String platformName;
 
-    public PlatformDTO(Platform obj) {
+    public PlatformDTO(){
+        super();
+    }
+
+    public PlatformDTO(@NotNull Platform obj) {
+        super();
         this.platformId = obj.getPlatformId();
         this.platformName = obj.getPlatformName();
     }

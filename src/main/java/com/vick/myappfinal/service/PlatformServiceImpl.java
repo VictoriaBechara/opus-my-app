@@ -20,16 +20,16 @@ public class PlatformServiceImpl {
     @Autowired
     private GameServiceImpl gameServiceImpl;
 
-    public Platform findById(Integer id){
+    public Platform findById(Integer id) {
         Optional<Platform> obj = platformRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + Platform.class.getName()));
     }
 
-    public List<Platform> findAll(){
+    public List<Platform> findAll() {
         return platformRepository.findAll();
     }
 
-    public Platform create (Platform obj){
+    public Platform create(Platform obj) {
         obj.setPlatformId(null);
         return platformRepository.save(obj);
     }
@@ -41,17 +41,18 @@ public class PlatformServiceImpl {
 
         return platformRepository.save(obj);
     }
+
     public void delete(Integer id) {
         findById(id);
         try {
             platformRepository.deleteById(id);
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("\n" +
                     "This platform cannot be deleted! It has associated games.");
         }
     }
 
-    public Platform addGameToPlatformById(Integer gameId, Integer platformId){
+    public Platform addGameToPlatformById(Integer gameId, Integer platformId) {
         Platform list = platformRepository.findById(platformId).orElseThrow(() -> new ObjectNotFoundException("Platform not found!"));
 
         list.getGames().add(gameServiceImpl.findById(gameId));

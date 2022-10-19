@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface GameService {
     Game findById(Integer id);
+
     List<Game> findAll();
+
     Game create(Game obj);
+
     Game update(Integer id, GameDTO objDto);
+
     void delete(Integer id);
 
 }

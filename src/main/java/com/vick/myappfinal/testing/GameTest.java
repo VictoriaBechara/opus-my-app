@@ -30,7 +30,7 @@ public class GameTest {
 
     @DisplayName("JUnit test for findById method")
     @Test
-    public void should_find_by_id(){
+    public void should_find_by_id() {
         //GIVEN
         given(gameRepository.findById(1)).willReturn(Optional.ofNullable(g1));
 
@@ -42,6 +42,4 @@ public class GameTest {
         assertThat(gameFound).isNotNull();
 
     }
-
-
 }

@@ -18,41 +18,55 @@ public class PlatformController {
     @Autowired
     private PlatformServiceImpl platformServiceImpl;
 
+    public PlatformServiceImpl getPlatformServiceImpl() {
+        return platformServiceImpl;
+    }
+    @Autowired
+    public void setPlatformServiceImpl(PlatformServiceImpl platformServiceImpl) {
+        this.platformServiceImpl = platformServiceImpl;
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = "/platformList/{id}")
-    public ResponseEntity<Platform> findById(@PathVariable Integer id){
+    public ResponseEntity<Platform> findById(@PathVariable Integer id) {
         Platform obj = platformServiceImpl.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @GetMapping(value = "/platformList")
-    public ResponseEntity<List<PlatformDTO>> findAll(){
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/platform")
+    public ResponseEntity<List<PlatformDTO>> findAll() {
         List<Platform> list = platformServiceImpl.findAll();
         List<PlatformDTO> listDTO = list.stream().map(obj -> new PlatformDTO(obj)).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(listDTO);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value = "/createPlatform")
-    public  ResponseEntity<Platform> create(@RequestBody Platform obj){
+    public ResponseEntity<Platform> create(@RequestBody Platform obj) {
         obj = platformServiceImpl.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getPlatformId()).toUri();
         return ResponseEntity.created(uri).body(obj);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value = "/updatePlatform/{id}")
-    public ResponseEntity<PlatformDTO> update(@PathVariable Integer id, @RequestBody PlatformDTO objDto){
+    public ResponseEntity<PlatformDTO> update(@PathVariable Integer id, @RequestBody PlatformDTO objDto) {
         Platform newObj = platformServiceImpl.update(id, objDto);
         return ResponseEntity.ok().body(new PlatformDTO(newObj));
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(value = "/deletePlatform/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id){
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         platformServiceImpl.delete(id);
         return ResponseEntity.noContent().build();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value = "/addGameToPlatform/{gameId}/{platformId}")
-    public ResponseEntity<Platform> addGameToPlatformById(@PathVariable Integer gameId, @PathVariable Integer platformId){
+    public ResponseEntity<Platform> addGameToPlatformById(@PathVariable Integer gameId, @PathVariable Integer platformId) {
         Platform list = platformServiceImpl.addGameToPlatformById(gameId, platformId);
         return ResponseEntity.ok().body(list);
     }

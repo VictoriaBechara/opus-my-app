@@ -13,7 +13,7 @@ public class TestConfig {
     private DBService dbService;
 
     @Bean
-    public void databaseInstance(){
+    public void databaseInstance() {
         this.dbService.databaseInstance();
     }
 }

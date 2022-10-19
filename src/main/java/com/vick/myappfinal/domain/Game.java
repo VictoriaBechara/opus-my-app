@@ -35,7 +35,7 @@ public class Game implements Serializable {
     @JsonIgnore
     private List<Genre> genres = new ArrayList<>();
 
-    public Game(){
+    public Game() {
         super();
     }
 

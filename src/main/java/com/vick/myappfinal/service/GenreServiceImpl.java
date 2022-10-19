@@ -20,38 +20,39 @@ public class GenreServiceImpl {
     @Autowired
     private GameServiceImpl gameServiceImpl;
 
-    public Genre findById(Integer id){
+    public Genre findById(Integer id) {
         Optional<Genre> obj = genreRepository.findById(id);
-        return obj.orElseThrow(()-> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + Genre.class.getName()));
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + Genre.class.getName()));
     }
 
-    public List<Genre> findAll(){
-        return  genreRepository.findAll();
+    public List<Genre> findAll() {
+        return genreRepository.findAll();
     }
 
-    public Genre create(Genre obj){
+    public Genre create(Genre obj) {
         obj.setGenreId(null);
         return genreRepository.save(obj);
     }
 
-    public Genre update(Integer id, GenreDTO objDto){
+    public Genre update(Integer id, GenreDTO objDto) {
         Genre obj = findById(id);
         obj.setGenreId(objDto.getGenreId());
         obj.setGenreName(objDto.getGenreName());
 
         return genreRepository.save(obj);
     }
-    public void delete(Integer id){
+
+    public void delete(Integer id) {
         findById(id);
         try {
             genreRepository.deleteById(id);
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("\n" +
                     "This genre cannot be deleted! It has associated games.");
         }
     }
 
-    public Genre addGameToGenreById(Integer gameId, Integer genreId){
+    public Genre addGameToGenreById(Integer gameId, Integer genreId) {
         Genre list = genreRepository.findById(genreId).orElseThrow(() -> new ObjectNotFoundException("Genre not found!"));
 
         list.getGames().add(gameServiceImpl.findById(gameId));

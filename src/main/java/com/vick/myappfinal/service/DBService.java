@@ -22,7 +22,7 @@ public class DBService {
     @Autowired
     private GenreRepository genreRepository;
 
-    public void databaseInstance(){
+    public void databaseInstance() {
         Platform p1 = new Platform(null, "console");
         Platform p2 = new Platform(null, "android");
         Platform p3 = new Platform(null, "pc");
@@ -37,7 +37,7 @@ public class DBService {
         Game g4 = new Game(null, "Elden Ring", "Elden Ring is an action role-playing game played in a third person perspective, with gameplay focusing on combat and exploration.", 10);
         Game g5 = new Game(null, "The Sims 3", "The Sims 3 is a simulation where you can play with your sims life.", 7);
 
-        g1.getPlatforms().addAll(Arrays.asList(p1,p3));
+        g1.getPlatforms().addAll(Arrays.asList(p1, p3));
         this.gameRepository.saveAll(Arrays.asList(g1, g2, g3, g4, g5));
 
         gr1.getGames().addAll(Arrays.asList(g5, g2));

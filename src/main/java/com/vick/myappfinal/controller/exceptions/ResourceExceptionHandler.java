@@ -13,7 +13,7 @@ import javax.servlet.ServletRequest;
 public class ResourceExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<StandartError> objectNotFoundException(ObjectNotFoundException e, ServletRequest request){
+    public ResponseEntity<StandartError> objectNotFoundException(ObjectNotFoundException e, ServletRequest request) {
         StandartError error = new StandartError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(), e.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
@@ -21,7 +21,7 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<StandartError> dataIntegrityViolationException(DataIntegrityViolationException e, ServletRequest request){
+    public ResponseEntity<StandartError> dataIntegrityViolationException(DataIntegrityViolationException e, ServletRequest request) {
         StandartError error = new StandartError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), e.getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);

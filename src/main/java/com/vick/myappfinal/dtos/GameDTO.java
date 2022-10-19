@@ -11,7 +11,7 @@ public class GameDTO {
     private String gameDescription;
     private Integer gameNote;
 
-    public GameDTO(){
+    public GameDTO() {
         super();
     }
 

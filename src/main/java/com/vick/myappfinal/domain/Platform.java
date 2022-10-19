@@ -25,9 +25,10 @@ public class Platform implements Serializable {
     )
     private List<Game> games = new ArrayList<>();
 
-    public Platform(){
+    public Platform() {
         super();
     }
+
     public Platform(Integer platformId, String platformName) {
         super();
         this.platformId = platformId;

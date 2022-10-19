@@ -18,8 +18,8 @@ public class DevConfig {
     private String strategy;
 
     @Bean
-    public boolean databaseInstance(){
-        if (strategy.equals("create")){
+    public boolean databaseInstance() {
+        if (strategy.equals("create")) {
             this.dbService.databaseInstance();
         }
         return false;

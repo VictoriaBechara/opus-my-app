@@ -25,7 +25,7 @@ public class Genre implements Serializable {
     )
     private List<Game> games = new ArrayList<>();
 
-    public Genre(){
+    public Genre() {
         super();
     }
 

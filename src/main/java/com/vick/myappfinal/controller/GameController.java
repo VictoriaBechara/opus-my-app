@@ -15,42 +15,46 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping
-@CrossOrigin(exposedHeaders="Access-Control-Allow-Origin")
 public class GameController {
 
     @Autowired
     private GameServiceImpl gameServiceImpl;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = "/gameList/{id}")
-    public ResponseEntity<Game> findById(@PathVariable Integer id){
+    public ResponseEntity<Game> findById(@PathVariable Integer id) {
         Game obj = gameServiceImpl.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = "/game")
-    public ResponseEntity<List<GameDTO>> findAll(){
+    public ResponseEntity<List<GameDTO>> findAll() {
         List<Game> list = gameServiceImpl.findAll();
         List<GameDTO> listDTO = list.stream().map(obj -> new GameDTO(obj)).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(listDTO);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value = "/createGame")
-    public  ResponseEntity<Game> create(@Valid @RequestBody Game obj){
+    public ResponseEntity<Game> create(@Valid @RequestBody Game obj) {
         obj = gameServiceImpl.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id").buildAndExpand(obj.getGameId()).toUri();
         return ResponseEntity.created(uri).body(obj);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value = "/updateGame/{id}")
-    public ResponseEntity<GameDTO> update(@PathVariable Integer id, @RequestBody GameDTO objDto){
+    public ResponseEntity<GameDTO> update(@PathVariable Integer id, @RequestBody GameDTO objDto) {
         Game newObj = gameServiceImpl.update(id, objDto);
         return ResponseEntity.ok().body(new GameDTO(newObj));
 
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(value = "/deleteGameById/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id){
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         gameServiceImpl.delete(id);
         return ResponseEntity.noContent().build();
     }
