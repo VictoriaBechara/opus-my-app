@@ -14,24 +14,27 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping
-@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Access-Control-Allow-Origin")
+@CrossOrigin(maxAge = 3600)
 public class GenreController {
     @Autowired
     private GenreServiceImpl genreServiceImpl;
 
-    @GetMapping(value = "/genreList/{id}")
+    @CrossOrigin("http://localhost:4200")
+    @GetMapping(value = "/genre/{id}")
     public ResponseEntity<Genre> findById(@PathVariable Integer id) {
         Genre obj = genreServiceImpl.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @GetMapping(value = "/genreList")
+    @CrossOrigin("http://localhost:4200")
+    @GetMapping(value = "/genre")
     public ResponseEntity<List<GenreDTO>> findAll() {
         List<Genre> list = genreServiceImpl.findAll();
         List<GenreDTO> listDTO = list.stream().map(obj -> new GenreDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
 
+    @CrossOrigin("http://localhost:4200")
     @PostMapping(value = "/createGenre")
     public ResponseEntity<Genre> create(@RequestBody Genre obj) {
         obj = genreServiceImpl.create(obj);
@@ -39,18 +42,21 @@ public class GenreController {
         return ResponseEntity.created(uri).body(obj);
     }
 
+    @CrossOrigin("http://localhost:4200")
     @PutMapping(value = "/updateGenre/{id}")
     public ResponseEntity<GenreDTO> update(@PathVariable Integer id, @RequestBody GenreDTO genreDTO) {
         Genre newObj = genreServiceImpl.update(id, genreDTO);
         return ResponseEntity.ok().body(new GenreDTO(newObj));
     }
 
+    @CrossOrigin("http://localhost:4200")
     @DeleteMapping(value = "/deleteGenre/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         genreServiceImpl.delete(id);
         return ResponseEntity.noContent().build();
     }
 
+    @CrossOrigin("http://localhost:4200")
     @PostMapping(value = "/addGameToGenre/{gameId}/{genreId}")
     public ResponseEntity<Genre> addGameToPlatformById(@PathVariable Integer gameId, @PathVariable Integer genreId) {
         Genre list = genreServiceImpl.addGameToGenreById(gameId, genreId);

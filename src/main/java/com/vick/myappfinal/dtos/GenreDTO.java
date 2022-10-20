@@ -1,6 +1,7 @@
 package com.vick.myappfinal.dtos;
 
 import com.vick.myappfinal.domain.Genre;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -8,7 +9,11 @@ public class GenreDTO {
     private Integer genreId;
     private String genreName;
 
-    public GenreDTO(Genre obj) {
+    public GenreDTO(){
+        super();
+    }
+
+    public GenreDTO(@NotNull Genre obj) {
         this.genreId = obj.getGenreId();
         this.genreName = obj.getGenreName();
     }
