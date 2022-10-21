@@ -8,11 +8,11 @@ import java.util.List;
 public interface GameService {
     Game findById(Integer id);
 
-    List<Game> findAll();
+    List<Game> findAll(Integer platformId);
 
     Game create(Game obj);
 
-    Game update(Integer id, GameDTO objDto);
+    Game update(Integer id, Game obj);
 
     void delete(Integer id);
 

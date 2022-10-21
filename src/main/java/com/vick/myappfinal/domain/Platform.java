@@ -19,11 +19,11 @@ public class Platform implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name = "games_platform",
+            name = "game_platform",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "platform_id")
     )
-    private List<Game> games = new ArrayList<>();
+    private List<Game> game = new ArrayList<>();
 
     public Platform() {
         super();
@@ -52,11 +52,11 @@ public class Platform implements Serializable {
     }
 
     public List<Game> getGames() {
-        return games;
+        return game;
     }
 
-    public void setGames(List<Game> games) {
-        this.games = games;
+    public void setGames(List<Game> game) {
+        this.game = game;
     }
 
     @Override

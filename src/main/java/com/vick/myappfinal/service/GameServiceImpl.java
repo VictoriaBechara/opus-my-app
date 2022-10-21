@@ -4,6 +4,7 @@ import com.vick.myappfinal.domain.Game;
 import com.vick.myappfinal.dtos.GameDTO;
 import com.vick.myappfinal.repositories.GameRepository;
 import com.vick.myappfinal.service.exceptions.DataIntegrityViolationException;
+import com.vick.myappfinal.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,20 @@ public class GameServiceImpl implements GameService {
 
     @Autowired
     private GameRepository gameRepository;
+    @Autowired
+    private  PlatformServiceImpl platformService;
+
+    @Autowired
+    private GenreServiceImpl genreService;
 
     public Game findById(Integer id) {
         Optional<Game> obj = gameRepository.findById(id);
-        return obj.orElse(null);
-        //orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + Game.class.getName()));
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Tipo: " + Game.class.getName()));
     }
 
-    public List<Game> findAll() {
-        return gameRepository.findAll();
+    public List<Game> findAll(Integer platformId) {
+        platformService.findById(platformId);
+        return gameRepository.findAllByPlatformPlatformId(platformId);
     }
 
     public Game create(Game obj) {
@@ -31,13 +37,16 @@ public class GameServiceImpl implements GameService {
         return gameRepository.save(obj);
     }
 
-    public Game update(Integer id, GameDTO objDto) {
-        Game obj = findById(id);
-        obj.setGameName(objDto.getGameName());
-        obj.setGameDescription(objDto.getGameDescription());
-        obj.setGameNote(objDto.getGameNote());
+    public Game update(Integer id, Game obj) {
+        Game newObj = findById(id);
+        updateData(newObj, obj);
+        return gameRepository.save(newObj);
+    }
 
-        return gameRepository.save(obj);
+    private void updateData(Game newObj, Game obj) {
+        newObj.setGameNote(obj.getGameNote());
+        newObj.setGameDescription(obj.getGameDescription());
+        newObj.setGameNote(obj.getGameNote());
     }
 
     public void delete(Integer id) {

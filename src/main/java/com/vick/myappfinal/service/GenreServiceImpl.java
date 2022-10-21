@@ -17,8 +17,8 @@ public class GenreServiceImpl {
     @Autowired
     private GenreRepository genreRepository;
 
-    @Autowired
-    private GameServiceImpl gameServiceImpl;
+    //@Autowired
+    //private GameServiceImpl gameServiceImpl;
 
     public Genre findById(Integer id) {
         Optional<Genre> obj = genreRepository.findById(id);
@@ -52,13 +52,13 @@ public class GenreServiceImpl {
         }
     }
 
-    public Genre addGameToGenreById(Integer gameId, Integer genreId) {
-        Genre list = genreRepository.findById(genreId).orElseThrow(() -> new ObjectNotFoundException("Genre not found!"));
+    //public Genre addGameToGenreById(Integer gameId, Integer genreId) {
+        //Genre list = genreRepository.findById(genreId).orElseThrow(() -> new ObjectNotFoundException("Genre not found!"));
 
-        list.getGames().add(gameServiceImpl.findById(gameId));
-        genreRepository.save(list);
+        //list.getGames().add(gameServiceImpl.findById(gameId));
+        //genreRepository.save(list);
 
-        return list;
-    }
+        //return list;
+    //}
 }
 

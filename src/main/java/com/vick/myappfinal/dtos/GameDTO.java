@@ -2,16 +2,18 @@ package com.vick.myappfinal.dtos;
 
 import com.vick.myappfinal.domain.Game;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class GameDTO {
+public class GameDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
     private Integer gameId;
     private String gameName;
-    private String gameDescription;
-    private Integer gameNote;
 
-    public GameDTO() {
+    public  GameDTO(){
         super();
     }
 
@@ -19,8 +21,6 @@ public class GameDTO {
         super();
         this.gameId = obj.getGameId();
         this.gameName = obj.getGameName();
-        this.gameDescription = obj.getGameDescription();
-        this.gameNote = obj.getGameNote();
     }
 
     public Integer getGameId() {
@@ -37,22 +37,6 @@ public class GameDTO {
 
     public void setGameName(String gameName) {
         this.gameName = gameName;
-    }
-
-    public String getGameDescription() {
-        return gameDescription;
-    }
-
-    public void setGameDescription(String gameDescription) {
-        this.gameDescription = gameDescription;
-    }
-
-    public Integer getGameNote() {
-        return gameNote;
-    }
-
-    public void setGameNote(Integer gameNote) {
-        this.gameNote = gameNote;
     }
 
     @Override

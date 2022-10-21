@@ -27,13 +27,13 @@ public class Game implements Serializable {
     private String gameDescription;
     private Integer gameNote;
 
-    @ManyToMany(mappedBy = "games")
+    @ManyToMany(mappedBy = "game")
     @JsonIgnore
-    private List<Platform> platforms = new ArrayList<>();
+    private List<Platform> platform = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "games")
+    @ManyToMany(mappedBy = "game")
     @JsonIgnore
-    private List<Genre> genres = new ArrayList<>();
+    private List<Genre> genre = new ArrayList<>();
 
     public Game() {
         super();
@@ -79,19 +79,19 @@ public class Game implements Serializable {
     }
 
     public List<Platform> getPlatforms() {
-        return platforms;
+        return platform;
     }
 
-    public void setPlatforms(List<Platform> platforms) {
-        this.platforms = platforms;
+    public void setPlatforms(List<Platform> platform) {
+        this.platform = platform;
     }
 
     public List<Genre> getGenres() {
-        return genres;
+        return genre;
     }
 
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
+    public void setGenres(List<Genre> genre) {
+        this.genre = genre;
     }
 
     @Override

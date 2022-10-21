@@ -15,46 +15,47 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(maxAge = 3600)
 @RestController
-@RequestMapping
+@RequestMapping(value = "/game")
 public class GameController {
+    private final GameServiceImpl gameServiceImpl;
 
-    @Autowired
-    private GameServiceImpl gameServiceImpl;
+    public GameController(GameServiceImpl gameServiceImpl) {
+        this.gameServiceImpl = gameServiceImpl;
+    }
 
     @CrossOrigin("http://localhost:4200")
-    @GetMapping(value = "/game/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Game> findById(@PathVariable Integer id) {
         Game obj = gameServiceImpl.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @CrossOrigin("http://localhost:4200")
-    @GetMapping(value = "/game")
-    public ResponseEntity<List<GameDTO>> findAll() {
-        List<Game> list = gameServiceImpl.findAll();
-        List<GameDTO> listDTO = list.stream().map(obj -> new GameDTO(obj)).collect(Collectors.toList());
-
+    @GetMapping
+    public ResponseEntity<List<GameDTO>> findAll(@RequestParam(value = "platform", defaultValue = "0") Integer platformId) {
+        List<Game> list = gameServiceImpl.findAll(platformId);
+        List<GameDTO> listDTO = list.stream().map(GameDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
 
     @CrossOrigin("http://localhost:4200")
-    @PostMapping(value = "/createGame")
+    @PostMapping(value = "/create")
     public ResponseEntity<Game> create(@Valid @RequestBody Game obj) {
         obj = gameServiceImpl.create(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id").buildAndExpand(obj.getGameId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getGameId()).toUri();
         return ResponseEntity.created(uri).body(obj);
     }
 
     @CrossOrigin("http://localhost:4200")
-    @PutMapping(value = "/updateGame/{id}")
-    public ResponseEntity<GameDTO> update(@PathVariable Integer id, @RequestBody GameDTO objDto) {
-        Game newObj = gameServiceImpl.update(id, objDto);
-        return ResponseEntity.ok().body(new GameDTO(newObj));
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Game> update(@PathVariable Integer id, @RequestBody Game obj) {
+        Game newObj = gameServiceImpl.update(id, obj);
+        return ResponseEntity.ok().body(newObj);
 
     }
 
     @CrossOrigin("http://localhost:4200")
-    @DeleteMapping(value = "/deleteGameById/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         gameServiceImpl.delete(id);
         return ResponseEntity.noContent().build();

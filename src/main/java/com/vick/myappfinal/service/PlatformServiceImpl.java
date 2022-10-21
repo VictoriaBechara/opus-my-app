@@ -17,8 +17,8 @@ public class PlatformServiceImpl {
     @Autowired
     private PlatformRepository platformRepository;
 
-    @Autowired
-    private GameServiceImpl gameServiceImpl;
+    //@Autowired
+    //private GameServiceImpl gameServiceImpl;
 
     public Platform findById(Integer id) {
         Optional<Platform> obj = platformRepository.findById(id);
@@ -52,12 +52,12 @@ public class PlatformServiceImpl {
         }
     }
 
-    public Platform addGameToPlatformById(Integer gameId, Integer platformId) {
-        Platform list = platformRepository.findById(platformId).orElseThrow(() -> new ObjectNotFoundException("Platform not found!"));
+    //public Platform addGameToPlatformById(Integer gameId, Integer platformId) {
+        //Platform list = platformRepository.findById(platformId).orElseThrow(() -> new ObjectNotFoundException("Platform not found!"));
 
-        list.getGames().add(gameServiceImpl.findById(gameId));
-        platformRepository.save(list);
+        //list.getGames().add(gameServiceImpl.findById(gameId));
+       // platformRepository.save(list);
 
-        return list;
-    }
+        //return list;
+    //}
 }

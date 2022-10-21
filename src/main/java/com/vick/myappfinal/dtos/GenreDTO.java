@@ -14,6 +14,7 @@ public class GenreDTO {
     }
 
     public GenreDTO(@NotNull Genre obj) {
+        super();
         this.genreId = obj.getGenreId();
         this.genreName = obj.getGenreName();
     }

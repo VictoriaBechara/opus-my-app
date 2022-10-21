@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class PlatformDTO {
-
     private Integer platformId;
     private String platformName;
 
