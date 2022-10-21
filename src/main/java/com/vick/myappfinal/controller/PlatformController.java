@@ -38,7 +38,7 @@ public class PlatformController {
     }
 
     @CrossOrigin("http://localhost:4200")
-    @PostMapping(value = "/create")
+    @PostMapping
     public ResponseEntity<Platform> create(@RequestBody Platform obj) {
         obj = platformServiceImpl.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getPlatformId()).toUri();
@@ -46,14 +46,14 @@ public class PlatformController {
     }
 
     @CrossOrigin("http://localhost:4200")
-    @PutMapping(value = "/update{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<PlatformDTO> update(@PathVariable Integer id, @RequestBody PlatformDTO objDto) {
         Platform newObj = platformServiceImpl.update(id, objDto);
         return ResponseEntity.ok().body(new PlatformDTO(newObj));
     }
 
     @CrossOrigin("http://localhost:4200")
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         platformServiceImpl.delete(id);
         return ResponseEntity.noContent().build();

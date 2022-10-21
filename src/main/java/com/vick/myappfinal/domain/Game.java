@@ -78,19 +78,19 @@ public class Game implements Serializable {
         this.gameNote = gameNote;
     }
 
-    public List<Platform> getPlatforms() {
+    public List<Platform> getPlatform() {
         return platform;
     }
 
-    public void setPlatforms(List<Platform> platform) {
+    public void setPlatform(List<Platform> platform) {
         this.platform = platform;
     }
 
-    public List<Genre> getGenres() {
+    public List<Genre> getGenre() {
         return genre;
     }
 
-    public void setGenres(List<Genre> genre) {
+    public void setGenre(List<Genre> genre) {
         this.genre = genre;
     }
 

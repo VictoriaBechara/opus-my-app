@@ -10,7 +10,7 @@ public interface GameService {
 
     List<Game> findAll(Integer platformId);
 
-    Game create(Game obj);
+    Game create(Integer platformId, Game obj);
 
     Game update(Integer id, Game obj);
 

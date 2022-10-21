@@ -1,6 +1,7 @@
 package com.vick.myappfinal.service;
 
 import com.vick.myappfinal.domain.Game;
+import com.vick.myappfinal.domain.Platform;
 import com.vick.myappfinal.dtos.GameDTO;
 import com.vick.myappfinal.repositories.GameRepository;
 import com.vick.myappfinal.service.exceptions.DataIntegrityViolationException;
@@ -8,6 +9,7 @@ import com.vick.myappfinal.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +34,10 @@ public class GameServiceImpl implements GameService {
         return gameRepository.findAllByPlatformPlatformId(platformId);
     }
 
-    public Game create(Game obj) {
+    public Game create(Integer platformId, Game obj) {
         obj.setGameId(null);
+        Platform plat = platformService.findById(platformId);
+        obj.setPlatform(Collections.singletonList(plat));
         return gameRepository.save(obj);
     }
 
@@ -50,13 +54,8 @@ public class GameServiceImpl implements GameService {
     }
 
     public void delete(Integer id) {
-        findById(id);
-        try {
-            gameRepository.deleteById(id);
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("\n" +
-                    "This game cannot be deleted! It has associated platforms.");
-        }
+        Game obj = findById(id);
+        gameRepository.delete(obj);
     }
 
 }

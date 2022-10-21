@@ -37,7 +37,7 @@ public class GenreController {
     }
 
     @CrossOrigin("http://localhost:4200")
-    @PostMapping(value = "/create")
+    @PostMapping
     public ResponseEntity<Genre> create(@RequestBody Genre obj) {
         obj = genreServiceImpl.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getGenreId()).toUri();
@@ -45,14 +45,14 @@ public class GenreController {
     }
 
     @CrossOrigin("http://localhost:4200")
-    @PutMapping(value = "/update/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<GenreDTO> update(@PathVariable Integer id, @RequestBody GenreDTO genreDTO) {
         Genre newObj = genreServiceImpl.update(id, genreDTO);
         return ResponseEntity.ok().body(new GenreDTO(newObj));
     }
 
     @CrossOrigin("http://localhost:4200")
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         genreServiceImpl.delete(id);
         return ResponseEntity.noContent().build();

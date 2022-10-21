@@ -39,11 +39,11 @@ public class GameController {
     }
 
     @CrossOrigin("http://localhost:4200")
-    @PostMapping(value = "/create")
-    public ResponseEntity<Game> create(@Valid @RequestBody Game obj) {
-        obj = gameServiceImpl.create(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getGameId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+    @PostMapping
+    public ResponseEntity<Game> create(@RequestParam(value = "platform", defaultValue = "0") Integer platformId, @RequestBody Game obj) {
+        Game newObj = gameServiceImpl.create(platformId, obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/game/{id}").buildAndExpand(newObj.getGameId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @CrossOrigin("http://localhost:4200")
@@ -55,7 +55,7 @@ public class GameController {
     }
 
     @CrossOrigin("http://localhost:4200")
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         gameServiceImpl.delete(id);
         return ResponseEntity.noContent().build();
