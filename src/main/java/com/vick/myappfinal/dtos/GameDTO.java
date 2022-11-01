@@ -2,14 +2,11 @@ package com.vick.myappfinal.dtos;
 
 import com.vick.myappfinal.domain.Game;
 
-import java.io.Serial;
-import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-public class GameDTO implements Serializable {
+public class GameDTO {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
     private Integer gameId;
     private String gameName;
 
@@ -17,7 +14,7 @@ public class GameDTO implements Serializable {
         super();
     }
 
-    public GameDTO(Game obj) {
+    public GameDTO(@NotNull Game obj) {
         super();
         this.gameId = obj.getGameId();
         this.gameName = obj.getGameName();
@@ -39,18 +36,4 @@ public class GameDTO implements Serializable {
         this.gameName = gameName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        GameDTO gameDTO = (GameDTO) o;
-
-        return Objects.equals(gameId, gameDTO.gameId);
-    }
-
-    @Override
-    public int hashCode() {
-        return gameId != null ? gameId.hashCode() : 0;
-    }
 }

@@ -1,5 +1,6 @@
 package com.vick.myappfinal.service;
 
+import com.vick.myappfinal.domain.Game;
 import com.vick.myappfinal.domain.Genre;
 import com.vick.myappfinal.dtos.GenreDTO;
 import com.vick.myappfinal.repositories.GenreRepository;
@@ -16,9 +17,6 @@ public class GenreServiceImpl {
 
     @Autowired
     private GenreRepository genreRepository;
-
-    //@Autowired
-    //private GameServiceImpl gameServiceImpl;
 
     public Genre findById(Integer id) {
         Optional<Genre> obj = genreRepository.findById(id);
@@ -43,13 +41,8 @@ public class GenreServiceImpl {
     }
 
     public void delete(Integer id) {
-        findById(id);
-        try {
-            genreRepository.deleteById(id);
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("\n" +
-                    "This genre cannot be deleted! It has associated games.");
-        }
+        Genre obj = findById(id);
+        genreRepository.delete(obj);
     }
 
     //public Genre addGameToGenreById(Integer gameId, Integer genreId) {

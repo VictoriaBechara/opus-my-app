@@ -2,6 +2,7 @@ package com.vick.myappfinal.controller;
 
 import com.vick.myappfinal.domain.Game;
 import com.vick.myappfinal.dtos.GameDTO;
+import com.vick.myappfinal.service.GameService;
 import com.vick.myappfinal.service.GameServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +18,29 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/game")
 public class GameController {
-    private final GameServiceImpl gameServiceImpl;
-
-    public GameController(GameServiceImpl gameServiceImpl) {
-        this.gameServiceImpl = gameServiceImpl;
-    }
+    @Autowired
+    private GameService gameServiceImpl;
 
     @CrossOrigin("http://localhost:4200")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Game> findById(@PathVariable Integer id) {
         Game obj = gameServiceImpl.findById(id);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @CrossOrigin("http://localhost:4200")
+    @GetMapping(value = "/findByName/{gameName}")
+    public ResponseEntity<Game> findByName(@PathVariable String gameName) {
+        Game obj = gameServiceImpl.findByName(gameName);
+        return ResponseEntity.ok().body(obj);
+    }
+
+    @CrossOrigin("http://localhost:4200")
+    @GetMapping(value = "/all")
+    public ResponseEntity<List<GameDTO>> findAllGames() {
+        List<Game> list = gameServiceImpl.findAllGames();
+        List<GameDTO> listDTO = list.stream().map(obj -> new GameDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDTO);
     }
 
     @CrossOrigin("http://localhost:4200")
@@ -40,17 +53,17 @@ public class GameController {
 
     @CrossOrigin("http://localhost:4200")
     @PostMapping
-    public ResponseEntity<Game> create(@RequestParam(value = "platform", defaultValue = "0") Integer platformId, @RequestBody Game obj) {
-        Game newObj = gameServiceImpl.create(platformId, obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/game/{id}").buildAndExpand(newObj.getGameId()).toUri();
-        return ResponseEntity.created(uri).build();
+    public  ResponseEntity<Game> create(@Valid @RequestBody Game obj){
+        obj = gameServiceImpl.create(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id").buildAndExpand(obj.getGameId()).toUri();
+        return ResponseEntity.created(uri).body(obj);
     }
 
     @CrossOrigin("http://localhost:4200")
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Game> update(@PathVariable Integer id, @RequestBody Game obj) {
-        Game newObj = gameServiceImpl.update(id, obj);
-        return ResponseEntity.ok().body(newObj);
+    public ResponseEntity<GameDTO> update(@PathVariable Integer id, @RequestBody Game objDto){
+        Game newObj = gameServiceImpl.update(id, objDto);
+        return ResponseEntity.ok().body(new GameDTO(newObj));
 
     }
 
@@ -61,5 +74,10 @@ public class GameController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @CrossOrigin("http://localhost:4200")
+    @DeleteMapping(value = "/removeGameAtPlatform/{platformId}/{gameId}")
+    public ResponseEntity<Void> remove(@PathVariable Integer platformId, @PathVariable Integer gameId){
+        gameServiceImpl.remove(platformId, gameId);
+        return  ResponseEntity.noContent().build();
+    }
 }

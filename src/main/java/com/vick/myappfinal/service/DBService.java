@@ -23,9 +23,8 @@ public class DBService {
     private GenreRepository genreRepository;
 
     public void databaseInstance() {
-        Platform p1 = new Platform(null, "console");
-        Platform p2 = new Platform(null, "android");
-        Platform p3 = new Platform(null, "pc");
+        Platform p1 = new Platform(null, "Video-Game");
+        Platform p3 = new Platform(null, "Computer");
 
         Genre gr1 = new Genre(null, "Simulation");
         Genre gr2 = new Genre(null, "Battle-Royal");
@@ -36,20 +35,15 @@ public class DBService {
         Game g3 = new Game(null, "Fortnite", "Fortnite is a survival game where 100 players fight against each other in player versus player combat to be the last one standing.", 6);
         Game g4 = new Game(null, "Elden Ring", "Elden Ring is an action role-playing game played in a third person perspective, with gameplay focusing on combat and exploration.", 10);
         Game g5 = new Game(null, "The Sims 3", "The Sims 3 is a simulation where you can play with your sims life.", 7);
+        Game g7 = new Game(null,"Counter-Strike", "The game pits two teams, Terrorists and Counter-Terrorists, against each other in different objective-based game modes.", 7 );
+        Game g8 = new Game(null, "Age Of Mythology", "Is a Strategy Game in which you collect resources, build buildings, a good economy and spend your resources to train army of soldiers, heroes and myth units to fight.", 1000);
+        Game g9 = new Game(null,"Donkey Kong", "It follows the adventures of a gorilla named Donkey Kong and his clan of other apes and monkeys. ", 10 );
+        Game g10 = new Game(null,"Clash of Clans", "Is an online multiplayer game in which players form communities called clans, train troops, and attack other players to earn resources. ", 9 );
 
-        g1.getPlatform().addAll(Arrays.asList(p1, p3));
-        this.gameRepository.saveAll(Arrays.asList(g1, g2, g3, g4, g5));
 
-        gr1.getGames().addAll(Arrays.asList(g5, g2));
-        gr2.getGames().addAll(Arrays.asList(g3));
-        gr3.getGames().addAll(Arrays.asList(g1, g4));
+        this.gameRepository.saveAll(Arrays.asList(g1, g2, g3, g4, g5, g7, g8, g9, g10));
         this.genreRepository.saveAll(Arrays.asList(gr1, gr2, gr3));
-
-        p1.getGames().addAll(Arrays.asList(g1, g2, g3));
-        p2.getGames().addAll(Arrays.asList(g2, g3));
-        p3.getGames().addAll(Arrays.asList(g1, g2, g3, g4));
-
-        this.platformRepository.saveAll(Arrays.asList(p1, p2, p3));
+        this.platformRepository.saveAll(Arrays.asList(p1, p3));
 
     }
 }

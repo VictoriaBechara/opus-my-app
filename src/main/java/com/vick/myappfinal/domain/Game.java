@@ -31,7 +31,7 @@ public class Game implements Serializable {
     @JsonIgnore
     private List<Platform> platform = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "game")
+    @ManyToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Genre> genre = new ArrayList<>();
 

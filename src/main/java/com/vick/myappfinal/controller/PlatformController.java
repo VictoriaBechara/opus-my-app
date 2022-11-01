@@ -16,11 +16,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/platform")
 public class PlatformController {
-    private final PlatformServiceImpl platformServiceImpl;
-
-    public PlatformController(PlatformServiceImpl platformServiceImpl) {
-        this.platformServiceImpl = platformServiceImpl;
-    }
+    @Autowired
+    private PlatformServiceImpl platformServiceImpl;
 
     @CrossOrigin("http://localhost:4200")
     @GetMapping(value = "/{id}")
@@ -59,10 +56,10 @@ public class PlatformController {
         return ResponseEntity.noContent().build();
     }
 
-    //@CrossOrigin("http://localhost:4200")
-    //@PostMapping(value = "/addGameToPlatform/{gameId}/{platformId}")
-    //public ResponseEntity<Platform> addGameToPlatformById(@PathVariable Integer gameId, @PathVariable Integer platformId) {
-        //Platform list = platformServiceImpl.addGameToPlatformById(gameId, platformId);
-        //return ResponseEntity.ok().body(list);
-    //}
+    @CrossOrigin("http://localhost:4200")
+    @PostMapping(value = "/addGameToPlatform/{gameId}/{platformId}")
+    public ResponseEntity<Platform> addGameToPlatformById(@PathVariable Integer gameId, @PathVariable Integer platformId) {
+        Platform list = platformServiceImpl.addGameToPlatformById(gameId, platformId);
+        return ResponseEntity.ok().body(list);
+    }
 }

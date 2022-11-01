@@ -1,11 +1,13 @@
 package com.vick.myappfinal.service;
 
+import com.vick.myappfinal.domain.Game;
 import com.vick.myappfinal.domain.Platform;
 import com.vick.myappfinal.dtos.PlatformDTO;
 import com.vick.myappfinal.repositories.PlatformRepository;
 import com.vick.myappfinal.service.exceptions.DataIntegrityViolationException;
 import com.vick.myappfinal.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +19,12 @@ public class PlatformServiceImpl {
     @Autowired
     private PlatformRepository platformRepository;
 
-    //@Autowired
-    //public GameServiceImpl gameServiceImpl;
+    private final GameServiceImpl gameService;
+
+    @Autowired
+    public PlatformServiceImpl(@Lazy GameServiceImpl gameService){
+        this.gameService = gameService;
+    }
 
     public Platform findById(Integer id) {
         Optional<Platform> obj = platformRepository.findById(id);
@@ -43,21 +49,16 @@ public class PlatformServiceImpl {
     }
 
     public void delete(Integer id) {
-        findById(id);
-        try {
-            platformRepository.deleteById(id);
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("\n" +
-                    "This platform cannot be deleted! It has associated games.");
-        }
+        Platform obj = findById(id);
+        platformRepository.delete(obj);
     }
 
-    //public Platform addGameToPlatformById(Integer gameId, Integer platformId) {
-        //Platform list = platformRepository.findById(platformId).orElseThrow(() -> new ObjectNotFoundException("Platform not found!"));
+    public Platform addGameToPlatformById(Integer gameId, Integer platformId) {
+        Platform list = platformRepository.findById(platformId).orElseThrow(() -> new ObjectNotFoundException("Platform not found!"));
 
-        //list.getGames().add(gameServiceImpl.findById(gameId));
-        //platformRepository.save(list);
+        list.getGames().add(gameService.findById(gameId));
+        platformRepository.save(list);
 
-        //return list;
-    //}
+        return list;
+    }
 }

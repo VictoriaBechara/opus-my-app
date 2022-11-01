@@ -17,7 +17,7 @@ public class Platform implements Serializable {
     private Integer platformId;
     private String platformName;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "game_platform",
             joinColumns = @JoinColumn(name = "game_id"),
